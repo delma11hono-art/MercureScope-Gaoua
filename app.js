@@ -223,14 +223,18 @@ function renderSelected() {
 
 function renderRanking() {
   const ranked = [...state.data.features].sort((a, b) => priority(b) - priority(a));
+
   document.getElementById("rankingBody").innerHTML = ranked.map((feature, index) => {
     const score = priority(feature);
     const level = priorityLevel(score);
+
     return `<tr data-site="${escapeHtml(feature.properties.name)}" class="${feature.properties.name === state.selected ? "selected" : ""}">
-      <td>${index + 1}</td><td>${escapeHtml(feature.properties.name)}</td><td><strong>${fr(score)}</strong></td><td class="level-cell ${level.key}">${level.label}</td>
+      <td>${index + 1}</td>
+      <td>${escapeHtml(feature.properties.name)}</td>
+      <td><strong>${fr(score)}</strong></td>
+      <td class="level-cell ${level.key}">${level.label}</td>
     </tr>`;
   }).join("");
-  document.getElementById("rankingStamp").textContent = new Intl.DateTimeFormat("fr-FR", { hour: "2-digit", minute: "2-digit" }).format(new Date());
 }
 
 function renderDecisionSignals() {
