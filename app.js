@@ -17,6 +17,12 @@ const CONFIG = {
     "Occupation du sol": [["Végétation", "#2f855a"], ["Sol nu", "#c2a36b"], ["Habitat", "#b42318"], ["Eau", "#2563eb"], ["Culture", "#d9f99d"]],
   },
 };
+
+/* CORRECTION : bornes de classification de la susceptibilité physique,
+   identiques à celles du mémoire (ruptures naturelles de Jenks, carte finale).
+   faible : score < 2,366 ; moyenne : 2,366 à 3,049 ; forte : score >= 3,049 */
+const JENKS = { medium: 2.366, high: 3.049 };
+
 const LEVEL_SYMBOL = { high: "▲", medium: "◆", low: "●" };
 const CLASS_KEY = { 1: "low", 2: "medium", 3: "high" };
 
@@ -62,14 +68,17 @@ function suscFrom(values, weights = normalisedWeights()) {
 }
 const susceptibility = f => suscFrom(state.scores[f.properties.name]);
 
-// Classe physique calculée pour les cinq sites à partir de leur score WLC.
-// Seuil opérationnel : score >= 3/5 = Forte ; score < 3/5 = Moyenne.
-// Cette classe de site est distincte de la classe de la grille raster affichée en fond.
+/* CORRECTION : classe physique d'un site, calculée uniquement à partir de son score WLC
+   et des bornes de Jenks du mémoire. Résultat avec les scores de l'étude :
+     Dyikando 3,6957 → Forte ; Doinsera-Birifor 3,4194 → Forte ; Sampoli 3,3312 → Forte ;
+     Danhal 3,1300 → Forte ; Gongombili Pablouna 2,7290 → Moyenne.
+   Cette classe est distincte de la couleur de la grille raster affichée en fond
+   (généralisation cartographique). En scénario (poids ou notes modifiés), elle est indicative. */
 function physicalSiteClass(f) {
   const score = susceptibility(f);
-  return score >= 3
-    ? { key: "high", label: "Forte" }
-    : { key: "medium", label: "Moyenne" };
+  if (score >= JENKS.high) return { key: "high", label: "Forte" };
+  if (score >= JENKS.medium) return { key: "medium", label: "Moyenne" };
+  return { key: "low", label: "Faible" };
 }
 
 function socialUrgency(f) {
@@ -112,6 +121,8 @@ function markerIcon(lv, selected, rank) {
   });
 }
 
+/* CORRECTION : « Connaissance du danger » affichait l'IPRM (perception du risque).
+   Les libellés distinguent maintenant la perception du risque (IPRM) et la connaissance des dangers. */
 function popup(f) {
   const p = f.properties, s = priority(f), lv = level(s);
   return `<h3 class="popup-title">${esc(p.name)}</h3><div class="popup-kpis">
@@ -119,8 +130,8 @@ function popup(f) {
     <span>Risque du terrain<strong>${fr(susceptibility(f), 2)} / 5</strong></span>
     <span>Classe physique du site<strong>${physicalSiteClass(f).label}</strong></span>
     <span>Occupation au point<strong>${esc(p.landcover_label)}</strong></span>
-    <span>Connaissance du danger<strong>${fr(p.iprm)} / 100</strong></span>
-    <span>Capacité à se protéger<strong>${fr(p.ica)} / 100</strong></span></div>`;
+    <span>Perception du risque (IPRM)<strong>${fr(p.iprm)} / 100</strong></span>
+    <span>Capacité à se protéger (ICA)<strong>${fr(p.ica)} / 100</strong></span></div>`;
 }
 
 /* ================= Réglages (onglet Scénario) ================= */
@@ -234,3 +245,4 @@ function renderSelected() {
   $("icaScore").textContent = fr(p.ica);
   $("sensitizedScore").textContent = `${fr(p.sensitized_pct)} %`;
   const n = Number(p.n ?? p.n_respondents ?? p.respondents ?? p.effectif);
+/* ===== FIN DU TEXTE REÇU : COLLEZ CI-DESSOUS LA SUITE DE VOTRE app.js, À PARTIR DE LA LIGNE QUI SUIT « const n = Number(...) » ===== */
