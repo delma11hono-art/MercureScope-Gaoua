@@ -1,3 +1,4 @@
+
 {
   "type": "FeatureCollection",
   "features": [
@@ -5,10 +6,7 @@
       "type": "Feature",
       "geometry": {
         "type": "Point",
-        "coordinates": [
-          -3.2194297,
-          10.3288055
-        ]
+        "coordinates": [-3.2194297, 10.3288055]
       },
       "properties": {
         "name": "Sampoli",
@@ -99,10 +97,7 @@
       "type": "Feature",
       "geometry": {
         "type": "Point",
-        "coordinates": [
-          -3.2047902,
-          10.260883
-        ]
+        "coordinates": [-3.2047902, 10.260883]
       },
       "properties": {
         "name": "Danhal",
@@ -121,8 +116,8 @@
           "hydro": 3
         },
         "physical_wlc": 3.13,
-        "susceptibility_class": 2,
-        "susceptibility_label": "Moyenne",
+        "susceptibility_class": 3,
+        "susceptibility_label": "Forte",
         "landcover_class": 1,
         "landcover_label": "Végétation",
         "landcover_distance_m": {
@@ -193,10 +188,7 @@
       "type": "Feature",
       "geometry": {
         "type": "Point",
-        "coordinates": [
-          -3.1983496,
-          10.2858223
-        ]
+        "coordinates": [-3.1983496, 10.2858223]
       },
       "properties": {
         "name": "Doinsera-Birifor",
@@ -215,8 +207,8 @@
           "hydro": 3
         },
         "physical_wlc": 3.4194,
-        "susceptibility_class": 2,
-        "susceptibility_label": "Moyenne",
+        "susceptibility_class": 3,
+        "susceptibility_label": "Forte",
         "landcover_class": 5,
         "landcover_label": "Culture",
         "landcover_distance_m": {
@@ -287,10 +279,7 @@
       "type": "Feature",
       "geometry": {
         "type": "Point",
-        "coordinates": [
-          -3.1946081,
-          10.3647275
-        ]
+        "coordinates": [-3.1946081, 10.3647275]
       },
       "properties": {
         "name": "Dyikando",
@@ -381,10 +370,7 @@
       "type": "Feature",
       "geometry": {
         "type": "Point",
-        "coordinates": [
-          -3.2057028,
-          10.2032606
-        ]
+        "coordinates": [-3.2057028, 10.2032606]
       },
       "properties": {
         "name": "Gongombili Pablouna",
