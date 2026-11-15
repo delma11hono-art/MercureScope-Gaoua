@@ -234,3 +234,4 @@ function renderSelected() {
   $("icaScore").textContent = fr(p.ica);
   $("sensitizedScore").textContent = `${fr(p.sensitized_pct)} %`;
   const n = Number(p.n ?? p.n_respondents ?? p.respondents ?? p.effectif);
+}
